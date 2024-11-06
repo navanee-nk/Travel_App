@@ -1,4 +1,11 @@
 .main {
     margin-top: 3rem;
-    padding: 1rem 3rem
+    padding: 1rem 3rem;    
+}
+.large-gap{
+    gap: 3rem;
+}
+.alert-text{
+    margin: 2rem 0;
+    text-align: center;
 }
