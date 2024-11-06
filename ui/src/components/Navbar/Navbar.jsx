@@ -2,7 +2,7 @@ import { useDate } from "../../context/DateContext";
 import "./Navbar.css";
 
 const Navbar = () => {
-  const { dateDispatch } = useDate();
+  const { destination, guests, checkin, checkout, dateDispatch } = useDate();
   const onSearchClick = () => {
     dateDispatch({ type: "SEARCH_MODAL" });
   };
@@ -18,11 +18,23 @@ const Navbar = () => {
         className="form-container d-flex align-center cursor-pointer shadow"
         onClick={onSearchClick}
       >
-        <span className="form-option">Any Where</span>
+        <span className="form-option">{destination || "Any Where"}</span>
         <span className="border-right-1px"></span>
-        <span className="form-option">Any Week</span>
+        <span className="form-option">
+          {checkin && checkout
+            ? `${checkin.toLocaleDateString("en-us", {
+                day: "numeric",
+                month: "short",
+              })} - ${checkout.toLocaleDateString("en-us", {
+                day: "numeric",
+                month: "short",
+              })}`
+            : "Any Week"}
+        </span>
         <span className="border-right-1px"></span>
-        <span className="form-option">Any Guests</span>
+        <span className="form-option">
+          {guests ? `${guests} guests` : "Any Guests"}
+        </span>
         <span className="search material-symbols-outlined">search</span>
       </div>
       <nav className="d-flex align-center gap-large">

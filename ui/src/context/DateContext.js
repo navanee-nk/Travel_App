@@ -2,22 +2,40 @@ import { createContext, useContext, useReducer } from "react";
 import dateReducer from "../Reducer/dateReducer";
 
 const initialState = {
+  destination: "",
+  guests: 0,
   checkin: null,
   checkout: null,
   isSearchModal: false,
+  isSearchResultOpen: true,
 };
 
 const DateContext = createContext(initialState);
 
 const DateContextProvider = ({ children }) => {
-  const [{ checkin, checkout, isSearchModal }, dateDispatch] = useReducer(
-    dateReducer,
-    initialState
-  );
+  const [
+    {
+      destination,
+      guests,
+      isSearchResultOpen,
+      checkin,
+      checkout,
+      isSearchModal,
+    },
+    dateDispatch,
+  ] = useReducer(dateReducer, initialState);
 
   return (
     <DateContext.Provider
-      value={{ checkin, checkout, isSearchModal, dateDispatch }}
+      value={{
+        destination,
+        guests,
+        isSearchResultOpen,
+        checkin,
+        checkout,
+        isSearchModal,
+        dateDispatch,
+      }}
     >
       {children}
     </DateContext.Provider>
