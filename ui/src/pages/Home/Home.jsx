@@ -8,6 +8,13 @@ import Category from "../../components/Category/Category";
 import { useCategory } from "../../context/CategoryContext";
 import { useDate } from "../../context/DateContext";
 import SearchStayWithDate from "../../components/SearchStayWithDate/SearchStayWithDate";
+import { useFilters } from "../../context/FilterContext";
+import Filter from "../../components/Filters/Filter";
+import filterByPrice from "../../utils/filterByPrice";
+import filterByBedsAndRooms from "../../utils/filterByBedsAndRooms";
+import filterByProperty from "../../utils/filterByProperty";
+import filterByRatings from "../../utils/filterByRatings";
+import filterByCancellation from "../../utils/filterByCancellation";
 
 const Home = () => {
   const [hotels, setHotels] = useState([]);
@@ -16,6 +23,17 @@ const Home = () => {
   const [hasMore, setHasMore] = useState(true);
   const { hotelCategory } = useCategory();
   const { isSearchModal } = useDate();
+  const { isFilerModalOpen } = useFilters();
+  const {
+    priceRange,
+    noOfBathrooms,
+    noOfBedrooms,
+    noOfBeds,
+    propertyType,
+    ratings,
+    isCancellable,
+    apply,
+  } = useFilters();
 
   useEffect(() => {
     (async () => {
@@ -35,6 +53,8 @@ const Home = () => {
     })();
   }, [hotelCategory]);
 
+  let filteredhotels = hotels;
+
   const fetchMoreData = () => {
     if (hotels.length >= testData.length) {
       setHasMore(false);
@@ -52,30 +72,67 @@ const Home = () => {
     }, 1000);
   };
 
+  const filteredHotelsByPrice = filterByPrice(hotels, priceRange);
+
+  const filteredHotelsByBedsandRooms = filterByBedsAndRooms(
+    filteredHotelsByPrice,
+    noOfBedrooms,
+    noOfBeds,
+    noOfBathrooms
+  );
+
+  const filteredHotelsByProperty = filterByProperty(
+    filteredHotelsByBedsandRooms,
+    propertyType
+  );
+
+  const filteredHotelsByRatings = filterByRatings(
+    filteredHotelsByProperty,
+    ratings
+  );
+
+  const filteredHotelsByCancellation = filterByCancellation(
+    filteredHotelsByRatings,
+    isCancellable
+  );
+
+  console.log(filteredHotelsByCancellation);
+
+  if (apply) {
+    filteredhotels = filteredHotelsByCancellation;
+  }
+
   return (
     <div className="relative">
       <Navbar></Navbar>
       <Category />
-      {hotels.length > 0 ? (
+      {filteredhotels.length > 0 && !apply ? (
         <InfiniteScroll
-          dataLength={hotels.length}
+          dataLength={filteredhotels.length}
           hasMore={hasMore}
           next={fetchMoreData}
           loader={
-            hotels.length > 0 && <h3 className="alert-text">loading ...</h3>
+            filteredhotels.length > 0 && (
+              <h3 className="alert-text">loading ...</h3>
+            )
           }
           endMessage={<p className="alert-text">You have seen it all...</p>}
         >
           <main className="main d-flex align-center wrap large-gap">
-            {hotels.map((hotel) => (
+            {filteredhotels.map((hotel) => (
               <HotelCard hotel={hotel} key={hotel._id} />
             ))}
           </main>
         </InfiniteScroll>
       ) : (
-        <></>
+        <main className="main d-flex align-center wrap large-gap">
+          {filteredhotels.map((hotel) => (
+            <HotelCard hotel={hotel} key={hotel._id} />
+          ))}
+        </main>
       )}
       {isSearchModal && <SearchStayWithDate />}
+      {isFilerModalOpen && <Filter />}
     </div>
   );
 };

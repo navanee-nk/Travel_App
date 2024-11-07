@@ -5,6 +5,7 @@ import App from "./App";
 import { CategoryContextProvider } from "./context/CategoryContext";
 import { BrowserRouter } from "react-router-dom";
 import { DateContextProvider } from "./context/DateContext";
+import { FilterContextProvider } from "./context/FilterContext";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
@@ -12,7 +13,9 @@ root.render(
     <BrowserRouter>
       <CategoryContextProvider>
         <DateContextProvider>
-          <App />
+          <FilterContextProvider>
+            <App />
+          </FilterContextProvider>
         </DateContextProvider>
       </CategoryContextProvider>
     </BrowserRouter>

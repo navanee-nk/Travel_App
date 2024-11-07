@@ -2,22 +2,17 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import "./Category.css";
 import { useCategory } from "../../context/CategoryContext";
+import { useFilters } from "../../context/FilterContext";
 
 const Category = () => {
   const [categories, setCategories] = useState([]);
   const [numOfCategoriesToShow, setNumOfCategoriesToShow] = useState(0);
   const { setHotelCategory } = useCategory();
+  const { dispatchFilter } = useFilters();
 
-  const onleftClickHandler = () => {
-    setNumOfCategoriesToShow((prev) => prev - 10);
-  };
-
-  const onRightClickHandler = () => {
-    setNumOfCategoriesToShow((prev) => prev + 10);
-  };  
   useEffect(() => {
     (async () => {
-      const { data } = await axios.get("http://localhost:3500/api/category");      
+      const { data } = await axios.get("http://localhost:3500/api/category");
       const categoriesToShow = data.slice(
         numOfCategoriesToShow + 10 > data.length
           ? data.length - 10
@@ -30,9 +25,21 @@ const Category = () => {
     })();
   }, [numOfCategoriesToShow]);
 
+  const onleftClickHandler = () => {
+    setNumOfCategoriesToShow((prev) => prev - 10);
+  };
+
+  const onRightClickHandler = () => {
+    setNumOfCategoriesToShow((prev) => prev + 10);
+  };
+
   const onCategoryClickHandler = (category) => {
-    console.log(category)
+    console.log(category);
     setHotelCategory(category);
+  };
+
+  const onFilterClickHandler = () => {
+    dispatchFilter({ type: "FILTER_MODAL_TOGGLE" });
   };
 
   return (
@@ -59,6 +66,13 @@ const Category = () => {
           <span className="material-symbols-outlined">chevron_right</span>
         </button>
       )}
+      <button
+        className="button btn-filter d-flex align-center gap-small cursor-pointer fixed"
+        onClick={onFilterClickHandler}
+      >
+        <span className="material-symbols-outlined">filter_alt</span>
+        <span>Filter</span>
+      </button>
     </section>
   );
 };
