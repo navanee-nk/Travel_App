@@ -52,14 +52,19 @@
     padding: 8px;
     font-size: 0.875rem;
 }
-.border-right-1px{
+
+.border-right-1px {
     border-right: 1px solid var(--accent-color);
     height: 70%;
 }
 
-.search{
+.search {
     background-color: var(--primary-color);
     height: 100%;
     padding: 8px;
     font-size: 1.8rem;
+}
+
+.btn-logout {
+    color: var(--primary-color);
 }

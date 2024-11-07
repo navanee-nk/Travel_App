@@ -11,7 +11,7 @@
     border-radius: 4px;
 }
 
-.hotelcard-details{
+.hotelcard-details {
     color: var(--text-color-primary);
     padding: 8px;
 }
@@ -36,7 +36,7 @@
     padding: 0 4px 8px 4px;
 }
 
-.price-details .price{
+.price-details .price {
     font-weight: bold;
     font-size: 1rem;
     margin-right: 4px;
@@ -50,4 +50,8 @@
 
 .favourite {
     color: #71717a;
+}
+
+.fav-selected {
+    color: red;
 }

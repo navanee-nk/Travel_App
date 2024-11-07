@@ -16,6 +16,11 @@ import filterByProperty from "../../utils/filterByProperty";
 import filterByRatings from "../../utils/filterByRatings";
 import filterByCancellation from "../../utils/filterByCancellation";
 
+import AuthModal from "../../components/Auth/AuthModal";
+import { useAuth } from "../../context/AuthContext";
+import { useAlert } from "../../context/AlertContext";
+import Alert from "../../components/Alert/Alert";
+
 const Home = () => {
   const [hotels, setHotels] = useState([]);
   const [testData, setTestData] = useState([]);
@@ -34,6 +39,10 @@ const Home = () => {
     isCancellable,
     apply,
   } = useFilters();
+
+  const { isAuthModalOpen } = useAuth();
+  const { alert } = useAlert();
+  console.log(alert);
 
   useEffect(() => {
     (async () => {
@@ -96,8 +105,6 @@ const Home = () => {
     isCancellable
   );
 
-  console.log(filteredHotelsByCancellation);
-
   if (apply) {
     filteredhotels = filteredHotelsByCancellation;
   }
@@ -133,6 +140,8 @@ const Home = () => {
       )}
       {isSearchModal && <SearchStayWithDate />}
       {isFilerModalOpen && <Filter />}
+      {isAuthModalOpen && <AuthModal />}
+      {alert.open && <Alert />}
     </div>
   );
 };

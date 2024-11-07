@@ -1,10 +1,28 @@
+import { useAlert } from "../../context/AlertContext";
+import { useAuth } from "../../context/AuthContext";
 import { useDate } from "../../context/DateContext";
 import "./Navbar.css";
 
 const Navbar = () => {
   const { destination, guests, checkin, checkout, dateDispatch } = useDate();
+  const { authDispatch, username, accessToken } = useAuth();
+  const { setAlert } = useAlert();
+  console.log(username, accessToken);
   const onSearchClick = () => {
     dateDispatch({ type: "SEARCH_MODAL" });
+  };
+
+  const onAuthClick = () => {
+    authDispatch({ type: "AUTH_MODAL_TOGGLE" });
+  };
+
+  const onLogoutClick = () => {
+    authDispatch({ type: "CLEAR_AUTH" });
+    setAlert({
+      open: true,
+      message: "Logout Successful!",
+      type: "success",
+    });
   };
 
   return (
@@ -37,16 +55,25 @@ const Navbar = () => {
         </span>
         <span className="search material-symbols-outlined">search</span>
       </div>
-      <nav className="d-flex align-center gap-large">
-        <div className="nav d-flex align-center cursor-pointer">
-          <span className="material-symbols-outlined profile-option menu">
-            menu
-          </span>
-          <span className="material-symbols-outlined profile-option person">
-            person
-          </span>
-        </div>
-      </nav>
+      {username && accessToken ? (
+        <button
+          className="button btn-logout cursor-pointer"
+          onClick={onLogoutClick}
+        >
+          Logout
+        </button>
+      ) : (
+        <nav className="d-flex align-center gap-large" onClick={onAuthClick}>
+          <div className="nav d-flex align-center cursor-pointer">
+            <span className="material-symbols-outlined profile-option menu">
+              menu
+            </span>
+            <span className="material-symbols-outlined profile-option person">
+              person
+            </span>
+          </div>
+        </nav>
+      )}
     </header>
   );
 };

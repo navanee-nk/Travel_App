@@ -6,6 +6,9 @@ import { CategoryContextProvider } from "./context/CategoryContext";
 import { BrowserRouter } from "react-router-dom";
 import { DateContextProvider } from "./context/DateContext";
 import { FilterContextProvider } from "./context/FilterContext";
+import { AuthContextProvider } from "./context/AuthContext";
+import { WishListProvider } from "./context/WishListContext";
+import { AlertProvider } from "./context/AlertContext";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
@@ -14,7 +17,13 @@ root.render(
       <CategoryContextProvider>
         <DateContextProvider>
           <FilterContextProvider>
-            <App />
+            <AuthContextProvider>
+              <WishListProvider>
+                <AlertProvider>
+                  <App />
+                </AlertProvider>
+              </WishListProvider>
+            </AuthContextProvider>
           </FilterContextProvider>
         </DateContextProvider>
       </CategoryContextProvider>
