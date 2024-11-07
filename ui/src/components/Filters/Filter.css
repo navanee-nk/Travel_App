@@ -1,0 +1,96 @@
+.filter-modal {
+    height: 100%;
+    width: 100%;
+    background-color: var(--overlay);
+    position: fixed;
+    z-index: 10;
+    top: 0;
+}
+
+.filter-page {
+    background-color: var(--background-color);
+    top: 0;
+    left: 20%;
+    transform: translate(30%, 0);
+    padding: 2rem 3rem;
+    margin: 3rem 0;
+    overflow: auto;
+    width: max-content;
+    height: 90%;
+}
+
+.filter-container {
+    padding: 1rem 0;
+}
+
+.filter-label {
+    font-size: 1.8rem;
+    opacity: .5;
+    display: inline-block;
+    padding: 8px 0;
+}
+
+.span-label {
+    font-size: 1.25rem;
+}
+
+.amenity-count {
+    border: 1px solid var(--text-color-primary);
+    width: 2.875rem;
+    height: 2rem;
+    border-radius: 5px;
+    margin-right: 1rem;
+    color: var(--accent-color);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 4px 1px;
+}
+
+
+
+.onhover:hover,
+.selected {
+    color: var(--background-color);
+    background-color: var(--text-color-primary);
+}
+
+.property-type {
+    display: inline-flex;
+    width: 7rem;
+    height: 6rem;
+    color: var(--accent-color);
+    border: 1px solid var(--text-color-primary);
+    border-radius: 4px;
+    padding: 1rem;
+}
+
+.rating {
+    height: 3rem;
+    width: 5rem;
+}
+
+.button.btn-link-primary {
+    font-size: 1.5rem;
+    border-bottom: 1px solid var(--text-color-primary);
+    padding: 0;
+    border-radius: 0;
+}
+
+.button.btn-apply {
+    font-size: 1.5rem;
+    font-weight: normal;
+    padding: 8px 1.5rem;
+}
+
+.btn-close{
+    height: 2rem;
+    width: 2.5rem;
+    border:1px solid var(--accent-color);
+    border-radius: 10px;
+}
+
+.button.btn-close:hover{
+    background-color: var(--accent-color);
+}

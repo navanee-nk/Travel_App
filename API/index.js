@@ -1,8 +1,9 @@
 const express = require("express");
 const bodyParser = require("body-parser");
+const cors = require('cors');
 
 const app = express();
-
+app.use(cors());
 
 const connectDb = require("./config/dbconfig");
 const addHotelSeedData = require("./routes/dataImport");
@@ -18,9 +19,9 @@ const PORT = 3500;
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
-app.get('/',(req,res)=>{
-    res.send('<html><h1>Welcome to travel app...!</h1></html>')
-})
+app.get("/", (req, res) => {
+  res.send("<html><h1>Welcome to travel app...!</h1></html>");
+});
 app.use("/api", addHotelSeedData);
 app.use("/api", addCategorySeedData);
 
